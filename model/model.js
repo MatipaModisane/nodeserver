@@ -7,7 +7,7 @@ var Visitor = function(visitor){
 };
 
 Visitor.getVisitorById = function (vistorId, result) {
-  sql.query("Select * from visitor where visitor_id = ?", vistorId, function (err, res) {
+  sql.query("Select * from visitor where id = ?", vistorId, function (err, res) {
     if(err) {
       console.log("error: ", err);
       result(err, null);
@@ -30,6 +30,55 @@ Visitor.getAllVisitors = function (result) {
     }
   });
 };
+
+Visitor.getAllUsers = function (result) {
+  sql.query("Select * from user;", function (err, res) {
+    if(err) {
+      console.log("error: ", err);
+      result(err, null);
+    }
+    else{
+      result(null, res);
+    }
+  });
+};
+
+Visitor.getUserByPermission = function (permission_id , result) {
+  sql.query("Select * from user where permission_role = ?;", permission_id,function (err, res) {
+    if(err) {
+      console.log("error: ", err);
+      result(err, null);
+    }
+    else{
+      result(null, res);
+    }
+  });
+};
+
+
+Visitor.getAllProperty = function ( result) {
+  sql.query("Select * from property;",function (err, res) {
+    if(err) {
+      console.log("error: ", err);
+      result(err, null);
+    }
+    else{
+      result(null, res);
+    }
+  });
+};
+
+// Visitor.getAllPropertyForUser = function ( userId, result) {
+//   sql.query("Select * from user where permission_role = 4 and ;",function (err, res) {
+//     if(err) {
+//       console.log("error: ", err);
+//       result(err, null);
+//     }
+//     else{
+//       result(null, res);
+//     }
+//   });
+// };
 
 //TODO add delete models
 

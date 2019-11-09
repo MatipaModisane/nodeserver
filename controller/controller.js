@@ -10,6 +10,7 @@ exports.getSpecificVisitor = function(req, res) {
     res.json(visitor);
     console.log('Get visitors by id endpoint hit: ', visitor);
   });
+
 }
 
 
@@ -21,8 +22,42 @@ exports.getAllVisitors = function(req, res) {
     res.json(visitor);
     console.log('Get all visitors endpoint hit: ', visitor);
   });
+
 }
 
+exports.getAllUsers = function(req, res) {
+
+  Visitor.getAllUsers(function (err, permission) {
+    if (err)
+      res.send(err);
+    res.json(permission);
+    console.log('Get all users endpoint hit: ', permission);
+  });
+
+}
+
+exports.getUserByPermission = function(req, res) {
+
+  Visitor.getUserByPermission (req.params.permission_id, function (err, user) {
+    if (err)
+      res.send(err);
+    res.json(user);
+    console.log('Get visitors by id endpoint hit: ', user);
+  });
+
+}
+
+
+exports.getAllProperty = function(req, res) {
+
+  Visitor.getAllProperty(function (err, property) {
+    if (err)
+      res.send(err);
+    res.json(property);
+    console.log('Get all users endpoint hit: ', property);
+  });
+
+}
 
 //TODO add delete export
 

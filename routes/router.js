@@ -9,6 +9,15 @@ module.exports = function(app) {
   app.route('/visitor/')
     .get(visitor.getAllVisitors);
 
+  app.route('/users/')
+      .get(visitor.getAllUsers);
+
+  app.route('/users/:permission_id')
+      .get(visitor.getUserByPermission);
+
+  app.route('/properties/')
+      .get(visitor.getAllProperty);
+
   //TODO add delete routes
 
   //TODO add edit routes
