@@ -50,5 +50,5 @@ Visitor.getAllVisitors = function (result) {
 
 
 
-module.modelss = Visitor;
+module.exports = Visitor;
 
