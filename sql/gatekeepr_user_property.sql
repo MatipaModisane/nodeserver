@@ -16,29 +16,34 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `user_roles`
+-- Table structure for table `user_property`
 --
 
-DROP TABLE IF EXISTS `user_roles`;
+DROP TABLE IF EXISTS `user_property`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `user_roles` (
-  `id` int(11) NOT NULL,
-  `role` varchar(45) NOT NULL,
+CREATE TABLE `user_property` (
+  `id` bigint(100) NOT NULL AUTO_INCREMENT,
+  `user_id` varchar(45) NOT NULL,
+  `property_id` bigint(100) NOT NULL,
+  `in_place_number` varchar(45) NOT NULL,
+  `enabled` int(1) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
-  KEY `ix_user_role_id` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  KEY `fk_u_prop_id` (`property_id`),
+  KEY `fk_user_p_id` (`user_id`),
+  CONSTRAINT `fk_u_prop_id` FOREIGN KEY (`property_id`) REFERENCES `property` (`id`),
+  CONSTRAINT `fk_user_p_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`username`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `user_roles`
+-- Dumping data for table `user_property`
 --
 
-LOCK TABLES `user_roles` WRITE;
-/*!40000 ALTER TABLE `user_roles` DISABLE KEYS */;
-INSERT INTO `user_roles` VALUES (1,'Super user'),(2,'Admin user'),(3,'Guard user'),(4,'Resident user');
-/*!40000 ALTER TABLE `user_roles` ENABLE KEYS */;
+LOCK TABLES `user_property` WRITE;
+/*!40000 ALTER TABLE `user_property` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_property` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -50,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-11-14 20:46:06
+-- Dump completed on 2019-11-14 20:46:05

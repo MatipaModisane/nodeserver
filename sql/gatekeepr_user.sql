@@ -24,16 +24,16 @@ DROP TABLE IF EXISTS `user`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user` (
   `username` varchar(45) NOT NULL,
-  `property_id` bigint(100) DEFAULT NULL,
+  `full_name` varchar(45) NOT NULL,
+  `cell_number` varchar(45) NOT NULL,
   `permission_role` int(11) NOT NULL,
-  `password` varchar(1000) DEFAULT NULL,
-  `registration_date` timestamp NULL DEFAULT NULL,
-  `last_sign_in` timestamp NULL DEFAULT NULL,
+  `password` varchar(1000) NOT NULL,
+  `registration_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `last_sign_in` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `enabled` int(1) NOT NULL,
   PRIMARY KEY (`username`),
   UNIQUE KEY `username_UNIQUE` (`username`),
-  KEY `user_property_fx` (`property_id`),
   KEY `user_role_fk` (`permission_role`),
-  CONSTRAINT `user_property_fx` FOREIGN KEY (`property_id`) REFERENCES `property` (`id`),
   CONSTRAINT `user_role_fk` FOREIGN KEY (`permission_role`) REFERENCES `user_roles` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -56,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-11-09 18:14:58
+-- Dump completed on 2019-11-14 20:46:05

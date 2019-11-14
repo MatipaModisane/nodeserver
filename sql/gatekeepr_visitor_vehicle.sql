@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS `visitor_vehicle`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `visitor_vehicle` (
-  `id` bigint(45) NOT NULL,
+  `id` bigint(45) NOT NULL AUTO_INCREMENT,
   `vehicle_registration` varchar(45) DEFAULT NULL,
   `vehicle_make` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -48,4 +48,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-11-09 18:14:58
+-- Dump completed on 2019-11-14 20:46:05
