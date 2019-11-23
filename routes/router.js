@@ -12,6 +12,9 @@ module.exports = function(app) {
   app.route('/users/')
       .get(visitor.getAllUsers);
 
+  app.route('/user/register')
+      .post(visitor.registerUser);
+
   app.route('/users/:permission_id')
       .get(visitor.getUserByPermission);
 

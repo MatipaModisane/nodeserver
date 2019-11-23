@@ -44,7 +44,7 @@ Visitor.getAllUsers = function (result) {
 };
 
 Visitor.getUserByPermission = function (permission_id , result) {
-  sql.query("Select * from user where permission_role = ?;", permission_id,function (err, res) {
+  sql.query("Select * from user;",function (err, res) {
     if(err) {
       console.log("error: ", err);
       result(err, null);
@@ -55,8 +55,29 @@ Visitor.getUserByPermission = function (permission_id , result) {
   });
 };
 
+Visitor.registerUser = function (user, result) {
 
-Visitor.getAllProperty = function ( result) {
+  console.log("Creating new user...");
+
+  var values = [
+    [user.username, user.fullname, user.cellnumber, user.permissionrole, user.password, Date.now(), user.enabled]
+  ];
+
+  sql.query("INSERT INTO user (username, full_name, cell_number, permission_role, password, registration_date, enabled) VALUES ?;"
+      , [values],  function (err, res) {
+    if(err) {
+      console.log("error: ", err);
+      result(err, null);
+    }
+    else{
+      result(null, res);
+    }
+  });
+
+};
+
+
+Visitor.getAllProperty = function (result) {
   sql.query("Select * from property;",function (err, res) {
     if(err) {
       console.log("error: ", err);
@@ -69,7 +90,7 @@ Visitor.getAllProperty = function ( result) {
 };
 
 // Visitor.getAllPropertyForUser = function ( userId, result) {
-//   sql.query("Select * from user where permission_role = 4 and ;",function (err, res) {
+//   sql.query("Select * from user where permission_role = 4 ",function (err, res) {
 //     if(err) {
 //       console.log("error: ", err);
 //       result(err, null);

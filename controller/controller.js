@@ -36,6 +36,20 @@ exports.getAllUsers = function(req, res) {
 
 }
 
+exports.registerUser = function(req, res) {
+
+  Visitor.registerUser( req.body ,function (err, user) {
+    user = req.body;
+    if (err)
+      res.send(err);
+    res.json("Sucessful insert of new user");
+    console.log('Create user endpoint hit: ', user);
+  });
+
+}
+
+
+
 exports.getUserByPermission = function(req, res) {
 
   Visitor.getUserByPermission (req.params.permission_id, function (err, user) {
