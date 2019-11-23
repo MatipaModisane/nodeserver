@@ -2,36 +2,46 @@
 var sql = require('../database.js');
 
 //Task object constructor
-var Visitor = function(visitor){
+var TaskObject = function(visitor){
 
 };
 
-Visitor.getVisitorById = function (vistorId, result) {
-  sql.query("Select * from visitor where id = ?", vistorId, function (err, res) {
+//*****************************************Authentication related model******************************************************
+
+//user models
+TaskObject.authenticateUser = function (user ,result) {
+
+  console.log("Authenticating user...");
+  console.log(user.username);
+  sql.query("Select * from user;", function (err, res) {
     if(err) {
       console.log("error: ", err);
       result(err, null);
     }
-    else{
-      result(null, res);
+    else {
+      console.log(res.length);
+      for (let i = 0; i < res.length; i++) {
+        if (user.username === res[i].username) {
+          console.log("Username has been found!");
+        }
+      }
     }
+
+    result(null, res);
+
   });
+
 };
 
 
-Visitor.getAllVisitors = function (result) {
-  sql.query("Select * from visitor;", function (err, res) {
-    if(err) {
-      console.log("error: ", err);
-      result(err, null);
-    }
-    else{
-      result(null, res);
-    }
-  });
-};
 
-Visitor.getAllUsers = function (result) {
+//*****************************************Admin related model******************************************************
+
+//user models
+TaskObject.getAllUsers = function (result) {
+
+  console.log("Getting all users...");
+
   sql.query("Select * from user;", function (err, res) {
     if(err) {
       console.log("error: ", err);
@@ -41,9 +51,13 @@ Visitor.getAllUsers = function (result) {
       result(null, res);
     }
   });
+
 };
 
-Visitor.getUserByPermission = function (permission_id , result) {
+TaskObject.getUserByPermission = function (permission_id , result) {
+
+  console.log("Getting users by permission...");
+
   sql.query("Select * from user;",function (err, res) {
     if(err) {
       console.log("error: ", err);
@@ -53,9 +67,10 @@ Visitor.getUserByPermission = function (permission_id , result) {
       result(null, res);
     }
   });
+
 };
 
-Visitor.registerUser = function (user, result) {
+TaskObject.registerUser = function (user, result) {
 
   console.log("Creating new user...");
 
@@ -65,6 +80,24 @@ Visitor.registerUser = function (user, result) {
 
   sql.query("INSERT INTO user (username, full_name, cell_number, permission_role, password, registration_date, enabled) VALUES ?;"
       , [values],  function (err, res) {
+        if(err) {
+          console.log("error: ", err);
+          result(err, null);
+          res.send(err);
+        }
+        else{
+          result(null, res);
+        }
+      });
+
+};
+
+//visitor models
+TaskObject.getAllVisitors = function (result) {
+
+  console.log("Getting all visitors...");
+
+  sql.query("Select * from visitor;", function (err, res) {
     if(err) {
       console.log("error: ", err);
       result(err, null);
@@ -77,7 +110,29 @@ Visitor.registerUser = function (user, result) {
 };
 
 
-Visitor.getAllProperty = function (result) {
+TaskObject.getVisitorById = function (vistorId, result) {
+
+  console.log("Getting visitor by id...");
+
+  sql.query("Select * from visitor where id = ?", vistorId, function (err, res) {
+    if(err) {
+      console.log("error: ", err);
+      result(err, null);
+    }
+    else{
+      result(null, res);
+    }
+  });
+
+};
+
+//*****************************************Super admin related model******************************************************
+
+//property models
+TaskObject.getAllProperty = function (result) {
+
+  console.log("Getting all properties...");
+
   sql.query("Select * from property;",function (err, res) {
     if(err) {
       console.log("error: ", err);
@@ -87,6 +142,7 @@ Visitor.getAllProperty = function (result) {
       result(null, res);
     }
   });
+
 };
 
 // Visitor.getAllPropertyForUser = function ( userId, result) {
@@ -101,24 +157,7 @@ Visitor.getAllProperty = function (result) {
 //   });
 // };
 
-//TODO add delete models
-
-//TODO add edit models
-
-//TODO add get all residence models
-
-//TODO add get specific residence and there visitors for a specific time range models
-
-//TODO get all residence and there visitors models
-
-//TODO add add vistor models
-
-//TODO add add resident models
-
-//TODO add edit resident models
 
 
-
-
-module.exports = Visitor;
+module.exports = TaskObject;
 

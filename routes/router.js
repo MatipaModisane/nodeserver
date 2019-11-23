@@ -1,40 +1,29 @@
 'use strict';
 module.exports = function(app) {
-  var visitor = require('../controller/controller');
+  let taskObject = require('../controller/controller');
 
-  // todoList Routes
-  app.route('/visitor/:vistorId')
-    .get(visitor.getSpecificVisitor);
+  //**************Authentication endpoints*****************
+ app.route('/user/login')
+     .post(taskObject.authenticateUser);
+
+  //**************Admin endpoints*****************
+  app.route('/users/')
+      .get(taskObject.getAllUsers);
 
   app.route('/visitor/')
-    .get(visitor.getAllVisitors);
-
-  app.route('/users/')
-      .get(visitor.getAllUsers);
-
-  app.route('/user/register')
-      .post(visitor.registerUser);
+      .get(taskObject.getAllVisitors);
 
   app.route('/users/:permission_id')
-      .get(visitor.getUserByPermission);
+      .get(taskObject.getUserByPermission);
 
+  app.route('/visitor/:vistorId')
+    .get(taskObject.getSpecificVisitor);
+
+  app.route('/user/register')
+      .post(taskObject.registerUser);
+
+  //**************Super admin endpoints*****************
   app.route('/properties/')
-      .get(visitor.getAllProperty);
-
-  //TODO add delete routes
-
-  //TODO add edit routes
-
-  //TODO add get all residence routes
-
-  //TODO add get specific residence and there visitors for a specific time range routes
-
-  //TODO get all residence and there visitors routes
-
-  //TODO add add vistor routes
-
-  //TODO add add resident routes
-
-  //TODO add edit resident routes
+      .get(taskObject.getAllProperty);
 
 };

@@ -1,10 +1,63 @@
 'use strict';
 
-var Visitor = require('../model/model');
+var TaskObject = require('../model/model');
 
+
+//*****************************************authentication related functions*********************************************
+exports.authenticateUser = function(req, res) {
+
+  TaskObject.authenticateUser( req.body , function (err, user) {
+    user = req.body;
+    if (err)
+      res.send(err);
+    res.json(true);
+    console.log('Authenticate user endpoint hit: ', user);
+  });
+
+}
+
+
+//*****************************************admin related functions******************************************************
+
+//user related
+exports.getAllUsers = function(req, res) {
+
+  TaskObject.getAllUsers(function (err, permission) {
+    if (err)
+      res.send(err);
+    res.json(permission);
+    console.log('Get all users endpoint hit: ', permission);
+  });
+
+}
+
+exports.registerUser = function(req, res) {
+
+  TaskObject.registerUser( req.body ,function (err, user) {
+    user = req.body;
+    if (err)
+      res.send(err);
+    res.json(true);
+    console.log('Create user endpoint hit: ', user);
+  });
+
+}
+
+exports.getUserByPermission = function(req, res) {
+
+  TaskObject.getUserByPermission (req.params.permission_id, function (err, user) {
+    if (err)
+      res.send(err);
+    res.json(user);
+    console.log('Get visitors by id endpoint hit: ', user);
+  });
+
+}
+
+//visitor related
 exports.getSpecificVisitor = function(req, res) {
 
-  Visitor.getVisitorById(req.params.vistorId, function (err, visitor) {
+  TaskObject.getVisitorById(req.params.vistorId, function (err, visitor) {
     if (err)
       res.send(err);
     res.json(visitor);
@@ -16,7 +69,7 @@ exports.getSpecificVisitor = function(req, res) {
 
 exports.getAllVisitors = function(req, res) {
 
-  Visitor.getAllVisitors(function (err, visitor) {
+  TaskObject.getAllVisitors(function (err, visitor) {
     if (err)
       res.send(err);
     res.json(visitor);
@@ -25,46 +78,12 @@ exports.getAllVisitors = function(req, res) {
 
 }
 
-exports.getAllUsers = function(req, res) {
+//*****************************************super admin related functions******************************************************
 
-  Visitor.getAllUsers(function (err, permission) {
-    if (err)
-      res.send(err);
-    res.json(permission);
-    console.log('Get all users endpoint hit: ', permission);
-  });
-
-}
-
-exports.registerUser = function(req, res) {
-
-  Visitor.registerUser( req.body ,function (err, user) {
-    user = req.body;
-    if (err)
-      res.send(err);
-    res.json("Sucessful insert of new user");
-    console.log('Create user endpoint hit: ', user);
-  });
-
-}
-
-
-
-exports.getUserByPermission = function(req, res) {
-
-  Visitor.getUserByPermission (req.params.permission_id, function (err, user) {
-    if (err)
-      res.send(err);
-    res.json(user);
-    console.log('Get visitors by id endpoint hit: ', user);
-  });
-
-}
-
-
+//property related
 exports.getAllProperty = function(req, res) {
 
-  Visitor.getAllProperty(function (err, property) {
+  TaskObject.getAllProperty(function (err, property) {
     if (err)
       res.send(err);
     res.json(property);
@@ -72,20 +91,4 @@ exports.getAllProperty = function(req, res) {
   });
 
 }
-
-//TODO add delete export
-
-//TODO add edit export
-
-//TODO add get all residence export
-
-//TODO add get specific residence and there visitors for a specific time range export
-
-//TODO get all residence and there visitors export
-
-//TODO add add vistor export
-
-//TODO add add resident export
-
-//TODO add edit resident export
 
